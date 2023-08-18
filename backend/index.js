@@ -6,6 +6,10 @@ import express, { json } from "express";
 import { connect } from "mongoose";
 import cors from "cors";
 import authRoutes from "./src/v1/routes/authRoutes.js";
+import noticeRoutes from "./src/v1/routes/noticeRoutes.js";
+import clubRoutes from "./src/v1/routes/clubRoutes.js";
+import positionRoutes from "./src/v1/routes/positionRoutes.js";
+import candidateRoutes from "./src/v1/routes/candidateRoutes.js";
 import passport from "passport";
 import "./src/utils/auth.js";
 
@@ -42,6 +46,11 @@ app.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/notice", noticeRoutes);
+app.use("/api/v1/club", clubRoutes);
+app.use("/api/v1/position", positionRoutes);
+app.use("/api/v1/candidate", candidateRoutes);
+
 
 // app.use("/api/v1", newRouter);
 
