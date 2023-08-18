@@ -17,6 +17,14 @@ import { AuthLayout } from "./components/AuthLayout";
 import { ProtectedLayout } from "./components/ProtectedLayout";
 import { getUserData, studentLogin, studentRegister } from "./utils/users";
 
+const dashboardLoader = async () => {
+  const postRes = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const photosRes = await fetch("https://jsonplaceholder.typicode.com/photos");
+  const post = await postRes.json();
+  const photos = await photosRes.json();
+  return { post, photos };
+};
+
 const App = () => {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -32,7 +40,11 @@ const App = () => {
         ></Route>
         {/* Stuents route */}
         <Route path="/student" element={<ProtectedLayout />}>
-          <Route path="dashboard" element={<StudentDashboard />}></Route>
+          <Route
+            path="dashboard"
+            element={<StudentDashboard />}
+            loader={dashboardLoader}
+          ></Route>
         </Route>
         {/* Admin routes */}
         <Route path="/admin">

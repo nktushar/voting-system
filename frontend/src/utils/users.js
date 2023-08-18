@@ -1,10 +1,8 @@
 export const getUserData = () =>
-  new Promise((resolve) =>
-    setTimeout(() => {
-      const user = window.localStorage.getItem("user");
-      resolve(user);
-    }, 0)
-  );
+  new Promise((resolve) => {
+    const user = window.localStorage.getItem("user");
+    resolve(user);
+  });
 
 export const studentLogin = async ({ request }) => {
   let formData = await request.formData();

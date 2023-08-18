@@ -1,7 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
+import { useLoaderData } from "react-router-dom";
 
 const StudentDashboard = () => {
+  const loaderData = useLoaderData();
+  console.log("loaderData ", loaderData);
+  const [post, setPost] = useState(loaderData.post);
+  const [photos, setPhotos] = useState(loaderData.photos);
+
+  useEffect(() => {
+    const dashboardLoader = async () => {
+      const postRes = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const photosRes = await fetch("https://jsonplaceholder.typicode.com/photos");
+      const post = await postRes.json();
+      const photos = await photosRes.json();
+      return { post, photos };
+    };
+
+    (async () => {
+      const { post, photos } = await dashboardLoader();
+      setPost(post);
+      setPhotos(photos);
+    })();
+  },[])
   const [openPositions, setOpenPositions] = useState([
     {
       id: 1,
