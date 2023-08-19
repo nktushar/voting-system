@@ -14,31 +14,26 @@ export const PostNotice = async (req, res) => {
 };
 
 export const GetNotice = async (req, res) => {
-    const notice = await NoticeService.GetNotice();
-    res.json({
-        message: "Notice fetched successfully",
-        notice: notice,
-    });
+  const { limit } = req.query;
+  const notice = await NoticeService.GetNotice(limit);
+  res.json(notice);
 };
 
 export const DeleteNotice = async (req, res) => {
-    const notice = await NoticeService.DeleteNotice(req.params.id);
-    res.json({
-        message: "Notice deleted successfully",
-        notice: notice,
-    });
+  const notice = await NoticeService.DeleteNotice(req.params.id);
+  res.json({
+    message: "Notice deleted successfully",
+    notice: notice,
+  });
 };
 
 export const UpdateNotice = async (req, res) => {
-    const notice = await NoticeService.UpdateNotice(req.params.id, req.body);
-    res.json({
-        message: "Notice updated successfully",
-        notice: notice,
-    });
+  const notice = await NoticeService.UpdateNotice(req.params.id, req.body);
+  res.json({
+    message: "Notice updated successfully",
+    notice: notice,
+  });
 };
-
-
-
 
 // const { StatusCodes } = require("http-status-codes");
 // const { response } = require("../utils/response");

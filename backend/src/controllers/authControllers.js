@@ -19,6 +19,14 @@ export const UserRegister = async (req, res, next) => {
   });
 };
 
+export const GetUsers = async (req, res) => {
+  const users = await AuthServices.GetUsers();
+  res.json({
+    message: "Users fetched successfully",
+    users: users,
+  });
+};
+
 export const UserLogin = async (req, res, next) => {
   passport.authenticate("login", async (err, user, info) => {
     try {

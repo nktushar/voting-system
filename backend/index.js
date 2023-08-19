@@ -10,6 +10,7 @@ import noticeRoutes from "./src/v1/routes/noticeRoutes.js";
 import clubRoutes from "./src/v1/routes/clubRoutes.js";
 import positionRoutes from "./src/v1/routes/positionRoutes.js";
 import candidateRoutes from "./src/v1/routes/candidateRoutes.js";
+import voteRoutes from "./src/v1/routes/voteRoutes.js";
 import passport from "passport";
 import "./src/utils/auth.js";
 
@@ -50,7 +51,11 @@ app.use("/api/v1/notice", noticeRoutes);
 app.use("/api/v1/club", clubRoutes);
 app.use("/api/v1/position", positionRoutes);
 app.use("/api/v1/candidate", candidateRoutes);
-
+app.use(
+  "/api/v1/vote",
+  passport.authenticate("jwt", { session: false }),
+  voteRoutes
+);
 
 // app.use("/api/v1", newRouter);
 

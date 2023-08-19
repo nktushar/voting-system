@@ -17,7 +17,6 @@ export const PostCandidate = async (req, res) => {
         reasonToApply: candidate.reasonToApply,
         revolutionGoal: candidate.revolutionGoal,
         transactionId: candidate.transactionId,
-        votes: candidate.votes,
     },
   });
 };

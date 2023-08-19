@@ -49,12 +49,11 @@ const CandidateSchema = new Schema(
     transactionId: {
         type: String,
     },
-    voters: [
-        {
-            type: SchemaTypes.ObjectId,
-            ref: "user",
-        },
-    ],
+    // assignedPosition: {
+    //     type: SchemaTypes.ObjectId,
+    //     ref: "position",
+    // },
+    
     // profilePicture: {
     //     type: String,
     // },
