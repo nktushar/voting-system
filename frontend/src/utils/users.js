@@ -1,8 +1,10 @@
-export const getUserData = () =>
-  new Promise((resolve) => {
+export const getUserData = (token) => {
+  console.log("token", token);
+  return new Promise((resolve) => {
     const user = window.localStorage.getItem("user");
     resolve(user);
   });
+};
 
 export const studentLogin = async ({ request }) => {
   let formData = await request.formData();

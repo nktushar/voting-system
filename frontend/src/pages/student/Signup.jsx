@@ -10,12 +10,12 @@ const Signup = () => {
           <h2 className="text-2xl font-bold text-center mb-4 text-blue-950">
             REGISTER
           </h2>
-          <img
+          {/* <img
             src="./images/iits.png
             "
             alt=""
             className="mx-auto w-24 mb-8"
-          />
+          /> */}
           <Form method="POST" className="space-y-4">
             <div>
               <label htmlFor="name" className="text-sm font-medium">

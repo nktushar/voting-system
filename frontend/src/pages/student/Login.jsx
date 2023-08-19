@@ -14,7 +14,6 @@ function Login() {
     }
   }, [actionData]);
 
-  
   return (
     <div className="bg-slate-100 bg-opacity-75">
       <div className="flex items-center justify-center h-screen">
@@ -22,7 +21,7 @@ function Login() {
           <h2 className="text-2xl font-bold text-center mb-4 text-blue-950">
             Login
           </h2>
-          <img src="./images/iits.png" alt="" className="mx-auto w-20 mb-8" />
+          {/* <img src="./images/iits.png" alt="" className="mx-auto w-20 mb-8" /> */}
           <Form method="POST" className="space-y-4">
             <div>
               <label htmlFor="student-id" className="text-sm font-medium">

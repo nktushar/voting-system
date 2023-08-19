@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const Notice = () => {
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [notices, setNotices] = useState([]);
   const [editNoticeId, setEditNoticeId] = useState(null);
 
@@ -15,7 +15,7 @@ const Notice = () => {
   };
 
   const handlePostNotice = () => {
-    if (title.trim() !== '' && body.trim() !== '') {
+    if (title.trim() !== "" && body.trim() !== "") {
       const newNotice = {
         id: new Date().getTime(),
         title,
@@ -24,8 +24,8 @@ const Notice = () => {
       };
 
       setNotices([...notices, newNotice]);
-      setTitle('');
-      setBody('');
+      setTitle("");
+      setBody("");
     }
   };
 
@@ -46,8 +46,8 @@ const Notice = () => {
         notice.id === editNoticeId ? { ...notice, title, body } : notice
       )
     );
-    setTitle('');
-    setBody('');
+    setTitle("");
+    setBody("");
     setEditNoticeId(null);
   };
 
@@ -59,7 +59,9 @@ const Notice = () => {
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
         <h2 className="text-xl font-bold mb-4">Write and Post Notice</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Title
+          </label>
           <input
             type="text"
             value={title}
@@ -69,7 +71,9 @@ const Notice = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Body</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Body
+          </label>
           <textarea
             value={body}
             onChange={handleBodyChange}
@@ -102,7 +106,9 @@ const Notice = () => {
           <div key={notice.id} className="mb-4">
             <h3 className="text-lg font-semibold">{notice.title}</h3>
             <p className="text-lg text-gray-600">{notice.body}</p>
-            <p className="text-sm text-gray-500">Posted on {notice.timestamp}</p>
+            <p className="text-sm text-gray-500">
+              Posted on {notice.timestamp}
+            </p>
             <div className="flex mt-2">
               <button
                 onClick={() => handleEditNotice(notice.id)}

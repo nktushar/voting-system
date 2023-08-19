@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const OpenPositionsPage = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [status, setStatus] = useState('open');
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [status, setStatus] = useState("open");
   const [positions, setPositions] = useState([]);
   const [editPositionId, setEditPositionId] = useState(null);
 
@@ -25,7 +25,7 @@ const OpenPositionsPage = () => {
   };
 
   const handlePostPosition = () => {
-    if (title.trim() !== '' && description.trim() !== '' && deadline !== '') {
+    if (title.trim() !== "" && description.trim() !== "" && deadline !== "") {
       const newPosition = {
         id: new Date().getTime(),
         title,
@@ -35,10 +35,10 @@ const OpenPositionsPage = () => {
       };
 
       setPositions([...positions, newPosition]);
-      setTitle('');
-      setDescription('');
-      setDeadline('');
-      setStatus('open');
+      setTitle("");
+      setDescription("");
+      setDeadline("");
+      setStatus("open");
     }
   };
 
@@ -47,7 +47,9 @@ const OpenPositionsPage = () => {
   };
 
   const handleEditPosition = (positionId) => {
-    const positionToEdit = positions.find((position) => position.id === positionId);
+    const positionToEdit = positions.find(
+      (position) => position.id === positionId
+    );
     setTitle(positionToEdit.title);
     setDescription(positionToEdit.description);
     setDeadline(positionToEdit.deadline);
@@ -63,10 +65,10 @@ const OpenPositionsPage = () => {
           : position
       )
     );
-    setTitle('');
-    setDescription('');
-    setDeadline('');
-    setStatus('open');
+    setTitle("");
+    setDescription("");
+    setDeadline("");
+    setStatus("open");
     setEditPositionId(null);
   };
 
@@ -78,7 +80,9 @@ const OpenPositionsPage = () => {
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
         <h2 className="text-xl font-bold mb-4">Post Open Position</h2>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Title
+          </label>
           <input
             type="text"
             value={title}
@@ -88,7 +92,9 @@ const OpenPositionsPage = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Description</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
           <textarea
             value={description}
             onChange={handleDescriptionChange}
@@ -98,7 +104,9 @@ const OpenPositionsPage = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Deadline</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Deadline
+          </label>
           <input
             type="date"
             value={deadline}
@@ -107,7 +115,9 @@ const OpenPositionsPage = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Status</label>
+          <label className="block text-sm font-medium text-gray-700">
+            Status
+          </label>
           <select
             value={status}
             onChange={handleStatusChange}
@@ -141,7 +151,9 @@ const OpenPositionsPage = () => {
           <div key={position.id} className="mb-4">
             <h3 className="text-lg font-semibold">{position.title}</h3>
             <p className="text-sm text-gray-600">{position.description}</p>
-            <p className="text-sm text-gray-600">Deadline: {position.deadline}</p>
+            <p className="text-sm text-gray-600">
+              Deadline: {position.deadline}
+            </p>
             <p className="text-sm text-gray-500">Status: {position.status}</p>
             <div className="flex mt-2">
               <button

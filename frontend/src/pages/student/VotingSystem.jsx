@@ -1,142 +1,151 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from "react";
+import { Await, Form, useLoaderData, useSubmit } from "react-router-dom";
+import Dashboard from "../../components/layouts/Dashboard";
+import { useAuth } from "../../context/AuthProvider";
 
 const VotingPage = () => {
-  const clubs = [
-    {
-      name: "Presidential Body",
-      positions: ["President", "Vice President", "General Secretary", "Treasurer"],
-    },
-    {
-      name: "Programming Club",
-      positions: ["Manager", "Assistant Manager", "Deputy Manager", "Additional Manager"],
-    },
-    {
-      name: "Robotics Club",
-      positions: ["Manager", "Assistant Manager", "Deputy Manager", "Additional Manager"],
-    },
-    // Add more clubs with positions here
-  ];
-
-  const [selectedClub, setSelectedClub] = useState(null);
-  const [selectedPosition, setSelectedPosition] = useState(null);
-  const [votedCandidates, setVotedCandidates] = useState({});
-
-  const handleClubClick = (clubIndex) => {
-    setSelectedClub(clubIndex);
-    setSelectedPosition(null);
-  };
-
-  const handlePositionClick = (positionIndex) => {
-    setSelectedPosition(positionIndex);
-  };
-
-  const handleVote = (candidate) => {
-    if (selectedClub !== null && selectedPosition !== null) {
-      const position = clubs[selectedClub].positions[selectedPosition];
-      setVotedCandidates((prevVotes) => ({
-        ...prevVotes,
-        [position]: candidate,
-      }));
-    }
-  };
+  const { votingLoader } = useLoaderData();
+  // const actionData = useActionData();
+  const { user } = useAuth();
 
   return (
-    <div className="container mx-auto mt-8 px-4">
-      <h1 className="text-2xl font-bold mb-4">Voting System</h1>
+    <Suspense fallback={<p>Loading...</p>}>
+      <Await
+        resolve={votingLoader(user.token)}
+        errorElement={<p>Something went wrong!</p>}
+        children={(data) => {
+          const clubs = data.data;
+          console.log("clubs ", clubs);
+          const [selectedClub, setSelectedClub] = useState(null);
+          const [selectedPosition, setSelectedPosition] = useState(null);
+          const [votedCandidates, setVotedCandidates] = useState({});
 
-      <div className="grid grid-cols-3 gap-4">
-        {/* Club List */}
-        <div>
-          <h2 className="text-xl font-bold mb-4">Clubs</h2>
-          <ul className="list-none">
-            {clubs.map((club, index) => (
-              <li
-                key={index}
-                className={`cursor-pointer mb-2 ${selectedClub === index ? 'font-semibold' : ''}`}
-                onClick={() => handleClubClick(index)}
-              >
-                {club.name}
-              </li>
-            ))}
-          </ul>
-        </div>
+          const handleClubClick = (club) => {
+            setSelectedClub(club);
+            setSelectedPosition(null);
+          };
 
-        {/* Position List */}
-        {selectedClub !== null && (
-          <div>
-            <h2 className="text-xl font-bold mb-4">Positions for {clubs[selectedClub].name}</h2>
-            <ul className="list-none">
-              {clubs[selectedClub].positions.map((position, index) => (
-                <li
-                  key={index}
-                  className={`cursor-pointer mb-2 ${selectedPosition === index ? 'font-semibold' : ''}`}
-                  onClick={() => handlePositionClick(index)}
-                >
-                  {position}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          const handlePositionClick = (position) => {
+            setSelectedPosition(position);
+          };
 
-        {/* Candidate List */}
-        {selectedPosition !== null && (
-          <div>
-            <h2 className="text-xl font-bold mb-4">
-              Candidates for {clubs[selectedClub].positions[selectedPosition]}
-            </h2>
-            <ul className="list-none">
-              {/* Add candidate names here */}
-              <li>
-                Candidate A{" "}
-                <button
-                  onClick={() => handleVote("Candidate A")}
-                  className={`ml-2 ${
-                    votedCandidates[clubs[selectedClub].positions[selectedPosition]] === "Candidate A"
-                      ? 'bg-green-500 text-white'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  } py-1 px-2 rounded-md`}
-                >
-                  {votedCandidates[clubs[selectedClub].positions[selectedPosition]] === "Candidate A"
-                    ? 'Voted'
-                    : 'Vote'}
-                </button>
-              </li>
-              <li>
-                Candidate B{" "}
-                <button
-                  onClick={() => handleVote("Candidate B")}
-                  className={`ml-2 ${
-                    votedCandidates[clubs[selectedClub].positions[selectedPosition]] === "Candidate B"
-                      ? 'bg-green-500 text-white'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  } py-1 px-2 rounded-md`}
-                >
-                  {votedCandidates[clubs[selectedClub].positions[selectedPosition]] === "Candidate B"
-                    ? 'Voted'
-                    : 'Vote'}
-                </button>
-              </li>
-              <li>
-                Candidate C{" "}
-                <button
-                  onClick={() => handleVote("Candidate C")}
-                  className={`ml-2 ${
-                    votedCandidates[clubs[selectedClub].positions[selectedPosition]] === "Candidate C"
-                      ? 'bg-green-500 text-white'
-                      : 'bg-blue-500 text-white hover:bg-blue-600'
-                  } py-1 px-2 rounded-md`}
-                >
-                  {votedCandidates[clubs[selectedClub].positions[selectedPosition]] === "Candidate C"
-                    ? 'Voted'
-                    : 'Vote'}
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
+          const submit = useSubmit();
+          return (
+            <Dashboard>
+              <div className="container mx-auto mt-8 px-4">
+                <h1 className="text-2xl font-bold mb-12 text-center">
+                  Voting System
+                </h1>
+
+                <div className="grid grid-cols-3 gap-4">
+                  {/* Club List */}
+                  <div>
+                    <h2 className="text-xl font-bold mb-4">Clubs</h2>
+                    <ul className="list-none">
+                      {clubs.map((club) => (
+                        <li
+                          key={club._id}
+                          className={`cursor-pointer mb-2 ${
+                            selectedClub?._id === club._id
+                              ? "font-semibold"
+                              : ""
+                          }`}
+                          onClick={() => handleClubClick(club)}
+                        >
+                          {club.heading}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Position List */}
+                  {selectedClub !== null && (
+                    <div>
+                      <h2 className="text-xl font-bold mb-4">
+                        Positions for {selectedClub?.heading}
+                      </h2>
+                      <ul className="list-none">
+                        {selectedClub?.positions.map((position) => (
+                          <li
+                            key={position._id}
+                            className={`cursor-pointer mb-2 ${
+                              selectedPosition?._id === position._id
+                                ? "font-semibold"
+                                : ""
+                            }`}
+                            onClick={() => handlePositionClick(position)}
+                          >
+                            {position.position}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Candidate List */}
+                  {selectedPosition !== null && (
+                    <div>
+                      <h2 className="text-xl font-bold mb-4">
+                        Candidates for {selectedPosition?.position}
+                      </h2>
+                      <ul className="list-none">
+                        {selectedPosition?.candidates.map((candidate) => (
+                          <li
+                            key={candidate._id}
+                            className="flex items-center gap-4"
+                          >
+                            {candidate.fullName}
+                            <Form
+                              method="post"
+                              onSubmit={(event) => {
+                                setSelectedPosition(null);
+                                setSelectedClub(null);
+                                submit(event.currentTarget);
+                              }}
+                            >
+                              <input
+                                type="hidden"
+                                name="candidate"
+                                value={candidate._id}
+                              />
+                              <input
+                                type="hidden"
+                                name="position"
+                                value={selectedPosition._id}
+                              />
+                              <input
+                                type="hidden"
+                                name="token"
+                                value={user.token}
+                              />
+                              <button
+                                type="submit"
+                                className={`ml-2 ${
+                                  selectedPosition.myVote?.candidate ===
+                                  candidate._id
+                                    ? "bg-green-500 text-white"
+                                    : "bg-blue-500 text-white hover:bg-blue-600"
+                                } py-1 px-2 rounded-md disabled:opacity-50 disabled:cursor-not-allowed`}
+                                disabled={selectedPosition.myVote?.voter}
+                              >
+                                {selectedPosition.myVote?.candidate ===
+                                candidate._id
+                                  ? "Voted"
+                                  : "Vote"}
+                              </button>
+                            </Form>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Dashboard>
+          );
+        }}
+      />
+    </Suspense>
   );
 };
 
