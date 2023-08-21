@@ -20,19 +20,23 @@ import { Link, NavLink } from "react-router-dom";
 const navigation = [
   {
     name: "Dashboard",
-    href: "/student/dashboard",
+    href: "/admin/adminDashboard",
     icon: HomeIcon,
   },
-  { name: "Our Community", href: "/student/community", icon: UsersIcon },
-  { name: "Executive Positions", href: "/student/position", icon: FolderIcon },
+  { name: "Notice", href: "/admin/notice", icon: UsersIcon },
   {
-    name: "Your Application",
-    href: "/student/application",
+    name: "Open Positions",
+    href: "/admin/openPositions",
     icon: CalendarIcon,
   },
   {
-    name: "Voting System",
-    href: "/student/votingPage",
+    name: "Candidates",
+    href: "/admin/candidates",
+    icon: DocumentDuplicateIcon,
+  },
+  {
+    name: "Votes",
+    href: "/admin/votes",
     icon: DocumentDuplicateIcon,
   },
   // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
@@ -42,7 +46,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Dashboard({ children }) {
+function AdminDashboard({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { logout } = useAuth();
 
@@ -253,7 +257,7 @@ function Dashboard({ children }) {
                         className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                         aria-hidden="true"
                       >
-                        My Name
+                        Admin
                       </span>
                       <ChevronDownIcon
                         className="ml-2 h-5 w-5 text-gray-400"
@@ -301,4 +305,4 @@ function Dashboard({ children }) {
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;

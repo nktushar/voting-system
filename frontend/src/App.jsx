@@ -8,6 +8,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Login from "./pages/student/Login";
+import AdminLogin from "./pages/admin/AdminLogin";
 import StudentDashboard from "./pages/student/StudentDashboard";
 import Notice from "./pages/admin/NoticeManagement";
 import OpenPositionsPage from "./pages/admin/PositionManagement";
@@ -15,10 +16,21 @@ import VotingPage from "./pages/student/VotingSystem";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthLayout } from "./components/AuthLayout";
 import { ProtectedLayout } from "./components/ProtectedLayout";
-import { getUserData, studentLogin, studentRegister } from "./utils/users";
+import {
+  adminLogin,
+  getUserData,
+  studentLogin,
+  studentRegister,
+} from "./utils/users";
 import { votingLoader, votingSubmit } from "./utils/voting";
 import { dashboardLoader } from "./utils/studentDashboard";
 import { useAuth } from "./context/AuthProvider";
+import Community from "./pages/student/Community";
+import Position from "./pages/student/Position";
+import Application from "./pages/student/Application";
+import Admin_Dashboard from "./pages/admin/Admin_Dashboard";
+import Candidates from "./pages/admin/Candidates";
+import Votes from "./pages/admin/Votes";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -28,6 +40,11 @@ const App = () => {
         loader={() => defer({ userPromise: getUserData() })}
       >
         <Route path="/" element={<Login />} action={studentLogin}></Route>
+        <Route
+          path="/adminLogin"
+          element={<AdminLogin />}
+          action={adminLogin}
+        ></Route>
         <Route
           path="/register"
           element={<Signup />}
@@ -48,14 +65,17 @@ const App = () => {
             }
             action={votingSubmit}
           ></Route>
-
-          <Route path="notice" element={<Notice />}></Route>
-          <Route path="openPositions" element={<OpenPositionsPage />}></Route>
+          <Route path="community" element={<Community />}></Route>
+          <Route path="position" element={<Position />}></Route>
+          <Route path="application" element={<Application />}></Route>
         </Route>
         {/* Admin routes */}
         <Route path="/admin">
+          <Route path="adminDashboard" element={<Admin_Dashboard />}></Route>
           <Route path="notice" element={<Notice />}></Route>
           <Route path="openPositions" element={<OpenPositionsPage />}></Route>
+          <Route path="candidates" element={<Candidates />}></Route>
+          <Route path="votes" element={<Votes />}></Route>
         </Route>
       </Route>
     )

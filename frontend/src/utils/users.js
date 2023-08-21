@@ -42,6 +42,42 @@ export const studentLogin = async ({ request }) => {
   }
 };
 
+export const adminLogin = async ({ request }) => {
+  let formData = await request.formData();
+  const studentId = formData.get("userName");
+  const password = formData.get("password");
+  if (!userName || !password) {
+    return {
+      error: true,
+      message: {
+        message: "Please provide all the required fields",
+      },
+    };
+  }
+  const loginData = { studentId, password };
+  try {
+    const user = await fetch("http://localhost:5000/api/v1/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+    const data = await user.json();
+    return { data };
+  } catch (error) {
+    if (error.error) return { data: error };
+    return {
+      data: {
+        error: true,
+        message: {
+          message: "Something went wrong",
+        },
+      },
+    };
+  }
+};
+
 export const studentRegister = async ({ request }) => {
   let formData = await request.formData();
   const fullName = formData.get("fullName");
