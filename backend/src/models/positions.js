@@ -5,21 +5,25 @@ const Schema = mongoose.Schema;
 const PositionSchema = new Schema(
   {
     position: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     club: {
-        type: SchemaTypes.ObjectId,
-        required: true,
-        ref: "club",
+      type: SchemaTypes.ObjectId,
+      required: true,
+      ref: "club",
     },
     description: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     deadline: {
-        type: Date,
-        required: true,
+      type: Date,
+      required: true,
+    },
+    positionStatus: {
+      type: String,
+      required: true,
     },
   },
   {
