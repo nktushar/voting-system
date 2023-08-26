@@ -2,36 +2,38 @@ import React, { Suspense, useState } from "react";
 import { Await, Form, useLoaderData, useSubmit } from "react-router-dom";
 import Dashboard from "../../components/layouts/Dashboard";
 import { useAuth } from "../../context/AuthProvider";
+import Spinner from "../../components/common/spinner";
 
 const VotingPage = () => {
   const { votingLoader } = useLoaderData();
+  console.log("votingLoader :", votingLoader);
   // const actionData = useActionData();
   const { user } = useAuth();
 
   return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <Await
-        resolve={votingLoader(user.token)}
-        errorElement={<p>Something went wrong!</p>}
-        children={(data) => {
-          const clubs = data.data;
-          console.log("clubs ", clubs);
-          const [selectedClub, setSelectedClub] = useState(null);
-          const [selectedPosition, setSelectedPosition] = useState(null);
-          const [votedCandidates, setVotedCandidates] = useState({});
+    <Dashboard>
+      <Suspense fallback={<Spinner />}>
+        <Await
+          resolve={votingLoader(user.token)}
+          errorElement={<p>Something went wrong!</p>}
+          children={(data) => {
+            const clubs = data.data;
+            console.log("clubs ", clubs);
+            const [selectedClub, setSelectedClub] = useState(null);
+            const [selectedPosition, setSelectedPosition] = useState(null);
+            const [votedCandidates, setVotedCandidates] = useState({});
 
-          const handleClubClick = (club) => {
-            setSelectedClub(club);
-            setSelectedPosition(null);
-          };
+            const handleClubClick = (club) => {
+              setSelectedClub(club);
+              setSelectedPosition(null);
+            };
 
-          const handlePositionClick = (position) => {
-            setSelectedPosition(position);
-          };
+            const handlePositionClick = (position) => {
+              setSelectedPosition(position);
+            };
 
-          const submit = useSubmit();
-          return (
-            <Dashboard>
+            const submit = useSubmit();
+            return (
               <div className="container mx-auto mt-8 px-4">
                 <h1 className="text-2xl font-bold mb-12 text-center">
                   Voting System
@@ -141,11 +143,11 @@ const VotingPage = () => {
                   )}
                 </div>
               </div>
-            </Dashboard>
-          );
-        }}
-      />
-    </Suspense>
+            );
+          }}
+        />
+      </Suspense>
+    </Dashboard>
   );
 };
 

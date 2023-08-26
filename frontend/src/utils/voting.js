@@ -21,11 +21,11 @@ export const votingLoader = async (token) => {
   const clubs = await clubsRes.json();
   const data = clubs.club.map((club) => {
     const clubPositions = positions.position.filter(
-      (position) => position.club === club._id
+      (position) => position.club._id === club._id
     );
     clubPositions.forEach((position) => {
       position.candidates = candidates.candidate.filter(
-        (candidate) => candidate.position === position._id
+        (candidate) => candidate.position._id === position._id
       );
       position.myVote = myVotes.vote.find(
         (vote) => vote.position === position._id

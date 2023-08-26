@@ -73,10 +73,10 @@ const Signup = () => {
               />
             </div> */}
             {/* Error handle */}
-            {actionData?.data?.error ? (
+            {actionData?.error ? (
               <div>
                 <p className="text-red-500 text-sm">
-                  {actionData.data.message.message}
+                  {actionData.message.message}
                 </p>
               </div>
             ) : null}

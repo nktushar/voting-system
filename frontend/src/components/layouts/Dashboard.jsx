@@ -16,6 +16,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "../../context/AuthProvider";
 import { Link, NavLink } from "react-router-dom";
+import { classNames } from "../../utils";
 
 const navigation = [
   {
@@ -24,7 +25,7 @@ const navigation = [
     icon: HomeIcon,
   },
   { name: "Our Community", href: "/student/community", icon: UsersIcon },
-  { name: "Executive Positions", href: "/student/position", icon: FolderIcon },
+  { name: "Apply", href: "/student/position", icon: FolderIcon },
   {
     name: "Your Application",
     href: "/student/application",
@@ -37,10 +38,6 @@ const navigation = [
   },
   // { name: "Reports", href: "#", icon: ChartPieIcon, current: false },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 function Dashboard({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);

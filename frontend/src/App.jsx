@@ -31,6 +31,11 @@ import Application from "./pages/student/Application";
 import Admin_Dashboard from "./pages/admin/Admin_Dashboard";
 import Candidates from "./pages/admin/Candidates";
 import Votes from "./pages/admin/Votes";
+import { noticeLoader, postNotice } from "./utils/noticeManagement";
+import { managePosition, positionLoader } from "./utils/positionManagement";
+import { positionApply, positionApplyLoader } from "./utils/positionApply";
+import { yourApplicationLoader } from "./utils/yourApplication";
+import { candidatesLoader } from "./utils/candidatesList";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -66,15 +71,50 @@ const App = () => {
             action={votingSubmit}
           ></Route>
           <Route path="community" element={<Community />}></Route>
-          <Route path="position" element={<Position />}></Route>
-          <Route path="application" element={<Application />}></Route>
+          <Route
+            path="position"
+            element={<Position />}
+            loader={() =>
+              defer({
+                positionApplyLoader: (user) => positionApplyLoader(user),
+              })
+            }
+            action={positionApply}
+          ></Route>
+          <Route
+            path="application"
+            element={<Application />}
+            loader={() =>
+              defer({
+                yourApplicationLoader: (user) => yourApplicationLoader(user),
+              })
+            }
+          ></Route>
         </Route>
         {/* Admin routes */}
         <Route path="/admin">
           <Route path="adminDashboard" element={<Admin_Dashboard />}></Route>
-          <Route path="notice" element={<Notice />}></Route>
-          <Route path="openPositions" element={<OpenPositionsPage />}></Route>
-          <Route path="candidates" element={<Candidates />}></Route>
+          <Route
+            path="notice"
+            element={<Notice />}
+            loader={noticeLoader}
+            action={postNotice}
+          ></Route>
+          <Route
+            path="openPositions"
+            element={<OpenPositionsPage />}
+            loader={positionLoader}
+            action={managePosition}
+          ></Route>
+          <Route
+            path="candidates"
+            element={<Candidates />}
+            loader={() =>
+              defer({
+                candidatesLoader: () => candidatesLoader(),
+              })
+            }
+          ></Route>
           <Route path="votes" element={<Votes />}></Route>
         </Route>
       </Route>
